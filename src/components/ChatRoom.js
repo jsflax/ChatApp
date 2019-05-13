@@ -5,10 +5,12 @@ import styled from "@emotion/styled";
 
 import ChatFeed from "./ChatFeed";
 import ChatBar from "./ChatBar";
-import { channelSubscriptionObserver, channelMessageObserver, ChannelMessage } from "../models";
 import { client, channelMessagesCollection } from "..";
 import { ObjectId } from "bson";
 import { BSON } from "mongodb-stitch-core-sdk";
+import { ChannelMessage } from "../models/channelMessage";
+import { channelSubscriptionObserver } from "../observers/channelSubscriptionObserver";
+import { channelMessageObserver } from "../observers/channelMessageObserver";
 
 export default class ChatRoom extends React.Component {
   constructor(props) {

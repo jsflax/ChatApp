@@ -6,18 +6,15 @@ import ChatRoom from "./ChatRoom";
 import { AnonymousCredential } from 'mongodb-stitch-browser-sdk';
 import React from "react";
 import ReactDOM from "react-dom";
-import { User } from "../models";
+import { User } from "../models/user";
 import { EJSON } from "bson";
 
-/* This component manages the state of the entire chat room.
- * NOTE: Requires a logged in Stitch user
- */
 export default class LoginView extends React.Component {
   async onLogin() {  
     if (this.state.inputValue.length < 3) {
       return
     }
-
+  
     const stitchUser = await client.auth.loginWithCredential(new AnonymousCredential());
     
     await usersCollection.insertOne(
@@ -28,15 +25,9 @@ export default class LoginView extends React.Component {
         null, 
         ["default"]
       )));
-
+  
     const rootElement = document.getElementById("root");
-	  ReactDOM.render(<ChatRoom />, rootElement);
-  }
-
-  updateInputValue(evt) {
-    this.setState({
-      inputValue: evt.target.value
-    });
+    ReactDOM.render(<ChatRoom />, rootElement);
   }
 
   constructor(props) {
@@ -46,6 +37,12 @@ export default class LoginView extends React.Component {
     };
   }
   
+  updateInputValue(evt) {
+    this.setState({
+      inputValue: evt.target.value
+    });
+  }
+
   render() {
     return (
       <ChatLayout>

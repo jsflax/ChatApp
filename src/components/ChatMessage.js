@@ -3,8 +3,8 @@ import React from "react";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import format from "date-fns/format";
-import { usersObserver } from "../models";
 import { defaultAvatars } from "..";
+import { usersObserver } from "../observers/userObserver";
 
 export default class ChatMessage extends React.Component {
   async observeUser() {
@@ -14,17 +14,12 @@ export default class ChatMessage extends React.Component {
         return;
       }
 
-      this.state = {
-        user: event.fullDocument
-      }
+      this.state = { user: event.fullDocument }
       
       this.setState(this.state);
     });
 
-    this.state = {
-      user: await usersObserver.sync(this.props.message.ownerId)
-    }
-    
+    this.state = { user: await usersObserver.sync(this.props.message.ownerId) }
     this.setState(this.state);
   }
 
