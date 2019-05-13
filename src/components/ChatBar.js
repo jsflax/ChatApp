@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usersCollection, client } from "..";
 import { Binary } from "bson";
+
 export default function ChatBar(props) {
   const { sendMessage, setMessageText, messageText } = props;
   const handleMessageSend = () => {
@@ -21,7 +22,6 @@ export default function ChatBar(props) {
       <div className="dropdown">
       <FontAwesomeIcon
         icon="ellipsis-v"
-        // class="dropbtn"
         css={css`
           cursor: pointer;
           padding-right: 8px;
@@ -62,39 +62,6 @@ export default function ChatBar(props) {
     </ChatBarLayout>
   );
 }
-// const ChatBarButton = props => {
-//   return (
-//     <button
-//       css={css`
-//         height: 100%;
-//         border-radius: 4px;
-//         line-height: 16px;
-//         font-size: 16px;
-//         text-align: center;
-//         border: none;
-//         margin-left: 12px;
-//         background-color: transparent;
-//         background-color: rgba(0, 123, 255, 0.25);
-//         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
-//         &:focus,
-//         :hover {
-//           // background-color: darkblue;
-//           // color: white;
-//           outline: 0;
-//           box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
-//         }
-//       `}
-//       onClick={props.onClick}
-//     >
-//       <FontAwesomeIcon
-//         icon="paper-plane"
-//         css={css`
-//           padding: 2px 8px;
-//         `}
-//       />
-//     </button>
-//   );
-// };
 
 const ChatBarLayout = styled.div`
   width: 100%;

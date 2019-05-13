@@ -32,9 +32,6 @@ async function main() {
 	library.add(faPaperPlane, faEllipsisV);
 	const rootElement = document.getElementById("root");
 
-	if (!client.auth.isLoggedIn && client.auth.listUsers().length != 0) {
-		await client.auth.removeUserWithId(client.auth.listUsers()[0].id);
-	}
 	if (client.auth.isLoggedIn) {
 		ReactDOM.render(<ChatRoom />, rootElement);	
 	} else {
