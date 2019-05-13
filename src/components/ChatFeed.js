@@ -1,17 +1,10 @@
 /** @jsx jsx */
-import React, { useRef, useState, useEffect } from "react";
-import { css, jsx } from "@emotion/core";
+import { useEffect } from "react";
+import { jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import ChatMessage from "./ChatMessage.js";
 import { animateScroll as scroll } from "react-scroll";
-
-const USER = {
-  id: "20391029481029849124",
-  profile: {
-    firstName: "Jessica",
-    lastName: "Real",
-  },
-};
+import { client } from "../index.js";
 
 const ChatFeed = props => {
   const { messages } = props;
@@ -26,33 +19,31 @@ const ChatFeed = props => {
     [messages],
   );
   const isFromCurrentUser = message => {
-    return !!message && message.from.id === USER.id;
+    return !!message && message.ownerId === client.auth.user.id;
   };
+  const isFromSameUser = (m1, m2)=> {
+    return m1.ownerId == m2.ownerId;
+  }
   return (
     <ChatFeedLayout id="feed">
       <Feed messages={messages}>
         {messages.map((m, i) => {
           const isFirst = i === 0;
           const isLast = i === messages.length - 1;
-          const prevIsFromCurrentUser =
-            isFromCurrentUser(messages[i - 1]) || false;
           const nextIsFromCurrentUser =
             isFromCurrentUser(messages[i + 1]) || false;
-          const isFirstFromUser =
-            isFirst || isFromCurrentUser(m)
-              ? !prevIsFromCurrentUser
-              : prevIsFromCurrentUser;
+          const shouldShowHeader = isFirst || !isFromSameUser(messages[i - 1], m);
           const isLastFromUser =
             isLast || isFromCurrentUser(m)
               ? !nextIsFromCurrentUser
               : nextIsFromCurrentUser;
           return (
             <ChatMessage
-              key={m.ts}
+              key={m._id}
               message={m}
               isFromCurrentUser={isFromCurrentUser(m)}
-              noHeader={!isFirstFromUser}
-              isFirstFromUser={isFirstFromUser}
+              shouldShowHeader={shouldShowHeader}
+              isFirstFromUser={shouldShowHeader}
               isLastFromUser={isLastFromUser}
             />
           );
