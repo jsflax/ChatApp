@@ -8,23 +8,9 @@ export class ChannelSubscriptionObserver extends Observable {
 	}
 
 	async updateLocalVector(documentId, subscription) {
-		// fetch latest message ids from logical time vector
-        const latestMessageIds = (await channelMessagesCollection.find({
-                    channelId: subscription.channelId,
-                    remoteTimestamp: {
-                        $gt: subscription.localTimestamp,
-                        $lte: subscription.remoteTimestamp
-					}
-				})
-				.asArray())
-				.map(it => it["_id"])
-				
-        await channelMessageObserver.sync(latestMessageIds)
-
-        await channelSubscriptionsCollection.updateOne(
-            { _id: documentId },
-            { $set : { localTimestamp: subscription.remoteTimestamp }}
-        )
+		// TODO: fetch latest message ids from logical time vector
+		// TODO: sync the message ids
+		// TODO: update the local timestamp on the remote
 	}
 
 	async notify(data) {
@@ -42,11 +28,11 @@ export class ChannelSubscriptionObserver extends Observable {
 	}
 
 	async sync(id) {
-		// this.stream.close();
-		const sub = await channelSubscriptionsCollection.find({_id: id }).first();
-		await this.updateLocalVector(id, sub);
-		this.stream = await channelSubscriptionsCollection.watch([id]);
-		this.stream.onNext((data) => { this.notify(data) });
+		// TODO: if stream, close it
+		// TODO: find subscription
+		// TODO: update the local vector
+		// TODO: watch the collection
+		// TODO: setup stream for observable
 	}
 }
 

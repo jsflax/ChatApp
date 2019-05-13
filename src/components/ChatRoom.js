@@ -27,25 +27,13 @@ export default class ChatRoom extends React.Component {
   }
 
   async subscribeToChannel() {
-    channelMessageObserver.subscribe(event => {
-      this.state.messages.push(event.fullDocument);
-      this.setState(this.state);
-    });
-
-    const subscriptionId = await client.callFunction("subscribeToChannel", [
-      client.auth.user.id, 
-      new ObjectId().toHexString, 
-      "default"
-    ]);
-
-    channelSubscriptionObserver.sync(subscriptionId);
+    // TODO: subscribe to channel observer
+    // TODO: subscribeToChannel function
+    // TODO: sync to subscriptionId
   }
 
   async sendMessage(text) {
-    const msg = ChannelMessage(new BSON.ObjectId(), client.auth.user.id, "default", text, Date.now(), undefined);
-    await channelMessagesCollection.insertOne(msg);
-    this.state.messages.push(msg);
-    this.setState(this.state);
+    // TODO: create new message, insert, and update state
   }
 
   render() {

@@ -3,14 +3,10 @@ import { channelMessagesCollection } from "..";
 
 export class ChannelMessageObserver extends Observable {
 	async sync(ids) {
-		if (this.stream) {
-			this.stream.close();
-		}
-		(await channelMessagesCollection.find({_id: { $in: ids }}).asArray()).forEach((msg) => {
-			this.notify({fullDocument: msg, operationType: "insert"})
-		});
-		this.stream = await channelMessagesCollection.watch(ids);
-		this.stream.onNext(this.notify);
+		// TODO: if stream, close it
+		// TODO: find ids in messages, pull them down, and notify observers
+		// TODO: watch the ids we're syncing on
+		// TODO: setup stream for observable
 	}
 }
 

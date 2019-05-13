@@ -18,12 +18,14 @@ const ChatFeed = props => {
     },
     [messages],
   );
+
   const isFromCurrentUser = message => {
     return !!message && message.ownerId === client.auth.user.id;
   };
   const isFromSameUser = (m1, m2)=> {
     return m1.ownerId == m2.ownerId;
   }
+  
   return (
     <ChatFeedLayout id="feed">
       <Feed messages={messages}>

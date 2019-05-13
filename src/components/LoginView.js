@@ -15,16 +15,7 @@ export default class LoginView extends React.Component {
       return
     }
   
-    const stitchUser = await client.auth.loginWithCredential(new AnonymousCredential());
-    
-    await usersCollection.insertOne(
-      EJSON.serialize(User(
-        stitchUser.id,
-        this.state.inputValue, 
-        Math.floor(Math.random() * Math.floor(7)),
-        null, 
-        ["default"]
-      )));
+    // TODO: Login and add new custom user
   
     const rootElement = document.getElementById("root");
     ReactDOM.render(<ChatRoom />, rootElement);

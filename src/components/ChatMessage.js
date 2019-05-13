@@ -8,19 +8,9 @@ import { usersObserver } from "../observers/userObserver";
 
 export default class ChatMessage extends React.Component {
   async observeUser() {
-    usersObserver.subscribe(event => {
-      if (event.operationType != "update" 
-          || event.documentKey["_id"] != this.props.message.ownerId) {
-        return;
-      }
-
-      this.state = { user: event.fullDocument }
-      
-      this.setState(this.state);
-    });
-
-    this.state = { user: await usersObserver.sync(this.props.message.ownerId) }
-    this.setState(this.state);
+    // TODO: subscribe to user observer
+    // TODO: on updates, change state
+    // TODO: sync message.ownerId
   }
 
   constructor(props) {

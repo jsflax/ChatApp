@@ -7,7 +7,7 @@ import { faPaperPlane, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { Stitch, RemoteMongoClient } from 'mongodb-stitch-browser-sdk';
 import LoginView from "./components/LoginView.js";
 
-export const client = Stitch.initializeDefaultAppClient('chat-eqvtc');
+export const client = Stitch.initializeDefaultAppClient('<your-app-id-here>');
 
 const db = client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('chats');
 export const usersCollection = db.collection("users");

@@ -5,62 +5,65 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { usersCollection, client } from "..";
 import { Binary } from "bson";
 
-export default function ChatBar(props) {
-  const { sendMessage, setMessageText, messageText } = props;
-  const handleMessageSend = () => {
-    sendMessage(messageText);
-    setMessageText("");
-  };
-  const handleInput = e => setMessageText(e.target.value);
-  const handleKeyPress = e => {
-    if (e.key === "Enter") {
-      handleMessageSend();
-    }
-  };
-  return (
-    <ChatBarLayout>
-      <div className="dropdown">
-      <FontAwesomeIcon
-        icon="ellipsis-v"
-        css={css`
-          cursor: pointer;
-          padding-right: 8px;
-          padding-top: 6px;
-        `}
-        onClick={() => {
-          document.getElementById("myDropdown").classList.toggle("show");
-        }}
-      />
-      <div id="myDropdown" className="dropdown-content">
-        <label href="#">set avatar
-        <input type="file" id="file-upload" onChange={() => {
-          var reader = new FileReader();
-          reader.onload = function(e) { 
-            const buffer = new Uint8Array(e.target.result);
-            console.log(buffer);
-              const binary = new Binary(buffer);
-              binary.write(buffer);
-              console.log(binary);
+export default class ChatBar extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-              usersCollection.updateOne(
-                { _id: client.auth.user.id },
-                { $set: { avatar: binary }}
-              ).then((it) => console.log(it));
-          }
-          reader.readAsArrayBuffer(document.querySelector('input').files[0]);
-        }}/>
-        </label>
-      </div>
-      </div>
-      <ChatBarInput
-        type="text"
-        value={messageText}
-        onChange={handleInput}
-        onKeyDown={handleKeyPress}
-      />
-      <ChatBarButton onClick={handleMessageSend} />
-    </ChatBarLayout>
-  );
+  async onAvatarChosen() {
+    var reader = new FileReader();
+    reader.onload = function(e) { 
+      const buffer = new Uint8Array(e.target.result);
+      const binary = new Binary(buffer);
+      binary.write(buffer);
+    }
+    reader.readAsArrayBuffer(document.querySelector('input').files[0]);
+  }
+
+  render() {
+    const { sendMessage, setMessageText, messageText } = props;
+    const handleMessageSend = () => {
+      sendMessage(messageText);
+      setMessageText("");
+    };
+    const handleInput = e => setMessageText(e.target.value);
+    const handleKeyPress = e => {
+      if (e.key === "Enter") {
+        handleMessageSend();
+      }
+    };
+    return (
+      <ChatBarLayout>
+        <div className="dropdown">
+        <FontAwesomeIcon
+          icon="ellipsis-v"
+          css={css`
+            cursor: pointer;
+            padding-right: 8px;
+            padding-top: 6px;
+          `}
+          onClick={() => {
+            document.getElementById("myDropdown").classList.toggle("show");
+          }}
+        />
+        <div id="myDropdown" className="dropdown-content">
+          <label href="#">set avatar
+          <input type="file" id="file-upload" onChange={() => {
+            this.onAvatarChosen();
+          }}/>
+          </label>
+        </div>
+        </div>
+        <ChatBarInput
+          type="text"
+          value={messageText}
+          onChange={handleInput}
+          onKeyDown={handleKeyPress}
+        />
+        <ChatBarButton onClick={handleMessageSend} />
+      </ChatBarLayout>
+    );
+  }
 }
 
 const ChatBarLayout = styled.div`
