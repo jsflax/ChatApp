@@ -14,7 +14,7 @@ export default class LoginView extends React.Component {
     if (this.state.inputValue.length < 3) {
       return
     }
-  
+
     // TODO: Login and add new custom user
   
     const rootElement = document.getElementById("root");

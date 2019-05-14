@@ -33,7 +33,7 @@ export default class ChatRoom extends React.Component {
   }
 
   async sendMessage(text) {
-    // TODO: create new message, insert, and update state
+    // TODO: instantiate new message, insert, push to state, and set state
   }
 
   render() {

@@ -7,7 +7,7 @@ export class ChannelSubscriptionObserver extends Observable {
 		super();
 	}
 
-	async updateLocalVector(documentId, subscription) {
+	async synchronizeChannelSubscription(documentId, subscription) {
 		// TODO: fetch latest message ids from logical time vector
 		// TODO: sync the message ids
 		// TODO: update the local timestamp on the remote
@@ -22,7 +22,7 @@ export class ChannelSubscriptionObserver extends Observable {
             return
         }
 
-        await this.updateLocalVector(data.documentKey["_id"], subscription)
+        await this.synchronizeChannelSubscription(data.documentKey["_id"], subscription)
 
 		super.notify(data);
 	}
