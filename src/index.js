@@ -32,11 +32,9 @@ async function main() {
 	library.add(faPaperPlane, faEllipsisV);
 	const rootElement = document.getElementById("root");
 
-	if (client.auth.isLoggedIn) {
-		ReactDOM.render(<ChatRoom />, rootElement);	
-	} else {
-		ReactDOM.render(<LoginView />, rootElement);
-	}
+	// TODO: if stitch client auth is logged in, render the chat room
+	// TODO: else, render the login view
+	// e.g., ReactDom.render(<LoginView />, rootElement);
 }
 
 main();
